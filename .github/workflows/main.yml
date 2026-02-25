@@ -22,8 +22,8 @@ jobs:
       - name: Build & Push da imagem
         uses: docker/build-push-action@v5
         with:
-          context: ./src
-          file: ./src/Dockerfile
+          context: ./kube-news/src
+          file: ./kube-news/src/Dockerfile
           push: true
           tags: |
             devopsdangluglu/live-kube-news:${{ github.run_number }}
