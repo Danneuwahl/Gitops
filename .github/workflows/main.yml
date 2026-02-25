@@ -1,7 +1,7 @@
 name: CI-CD
 
 on:
-  workflow_dispatch:        # habilita o botão "Run workflow" na aba Actions
+  workflow_dispatch:        # habilita o botão "Run workflow"
   push:
     branches: ["main"]      # mantém o trigger automático por push
 
@@ -22,9 +22,16 @@ jobs:
       - name: Build & Push da imagem
         uses: docker/build-push-action@v5
         with:
-          context: ./kube-news/src
-          file: ./kube-news/src/Dockerfile
+          context: ./src
+          file: ./src/Dockerfile
           push: true
           tags: |
             devopsdangluglu/live-kube-news:${{ github.run_number }}
             devopsdangluglu/live-kube-news:latest
+          provenance: false
+          no-cache: true
+          sbom: false
+          build-args: |
+            NPM_CONFIG_LOGLEVEL=verbose
+          labels: |
+            build.sha=${{ github.sha }}
